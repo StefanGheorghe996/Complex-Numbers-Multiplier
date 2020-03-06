@@ -19,7 +19,7 @@ module complex_nr_mult_1#(
     output wire                         op_ready    , // module is ready to receive new operands
     output wire                         res_val     , // result valid signal
     output reg      [DATA_WIDTH*2-1:0]  result_re   , // real part of the final result
-    output reg      [DATA_WIDTH*2-1:0]  result_im   , // imaginary part of the real result
+    output reg      [DATA_WIDTH*2-1:0]  result_im     // imaginary part of the real result
 );
 
     // Internal signals and registers declaration
@@ -59,7 +59,7 @@ module complex_nr_mult_1#(
         .result_reg_sel (result_reg_sel) 
     );
 
-    uint8_mult MULTIPLIER #(DATA_WIDTH)(
+    uint8_mult  #(DATA_WIDTH) MULTIPLIER(
         .op1    (multiplier_op_1  ),
         .op2    (multiplier_op_2  ),
         .result (multiplier_result)

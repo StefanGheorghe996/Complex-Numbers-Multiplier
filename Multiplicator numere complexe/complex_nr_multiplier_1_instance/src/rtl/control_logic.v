@@ -14,7 +14,7 @@ module control_logic(
     output wire             op_1_sel          , // Selection signal for the first operand of the uint8_mult module
     output wire             op_2_sel          , // Selection signal for the second operand of the uint8_mult module
     output wire             compute_enable    , // enable for final result computation
-    output wire [1:0]       result_reg_sel    , // Selection signal for destination register of the results
+    output wire [1:0]       result_reg_sel      // Selection signal for destination register of the results
 );
 
     //State parameters

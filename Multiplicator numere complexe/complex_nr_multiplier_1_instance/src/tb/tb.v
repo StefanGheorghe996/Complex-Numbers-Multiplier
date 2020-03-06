@@ -16,7 +16,7 @@ module complex_nr_mult_tb#(
     output reg [DATA_WIDTH-1 : 0]    op_1_re             , // input for the real part of the first operand
     output reg [DATA_WIDTH-1 : 0]    op_1_im             , // input for the imaginary part of the first operand
     output reg [DATA_WIDTH-1 : 0]    op_2_re             , // input for the real part of the second operand
-    output reg [DATA_WIDTH-1 : 0]    op_2_im             , // input for the imaginary part of the second operand
+    output reg [DATA_WIDTH-1 : 0]    op_2_im               // input for the imaginary part of the second operand
 
 );
 
@@ -64,7 +64,7 @@ module complex_nr_mult_tb#(
             wait(wait_cycles);
             res_ready <= 'b1;
             $display("%M %t - RESULT READY SIGNAL ASSERTED", $time);
-            #(posedge clk);
+            @(posedge clk);
             res_ready <= 'b0;
             $display("%M %t - OPERAND VALID SIGNAL DEASSERTED", $time);
         end    
@@ -76,8 +76,7 @@ module complex_nr_mult_tb#(
             write_operands(2,4,3,4);
             module_wait(2);
             write_valid;
-            module_wait(10);
-            write_result_ready;
+            write_result_ready(10);
             $stop;
         end
     endtask
