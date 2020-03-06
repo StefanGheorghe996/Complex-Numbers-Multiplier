@@ -3,11 +3,7 @@
 // Date:    06.03.2020
 
 module complex_nr_mult_tb#(
-    parameter DATA_WIDTH    = 8,
-    parameter OP_1_RE       = 'd2,
-    parameter OP_1_IM       = 'd4,
-    parameter OP_2_RE       = 'd3,
-    parameter OP_2_IM       = 'd6,
+    parameter DATA_WIDTH    = 8
 )(
     input   clk         , // clock signal
     input   rstn        , // asynchronous reset active 0
@@ -72,6 +68,18 @@ module complex_nr_mult_tb#(
             res_ready <= 'b0;
             $display("%M %t - OPERAND VALID SIGNAL DEASSERTED", $time);
         end    
+    endtask
+
+    task test_scenario_1;
+        begin
+            $display("%M %t - STARTED FIRST TEST SCENARIO", $time);
+            write_operands(2,4,3,4);
+            module_wait(2);
+            write_valid;
+            module_wait(10);
+            write_result_ready;
+            $stop;
+        end
     endtask
 
 
