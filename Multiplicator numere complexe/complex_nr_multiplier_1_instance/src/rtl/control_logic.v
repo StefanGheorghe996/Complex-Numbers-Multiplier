@@ -76,7 +76,7 @@ module control_logic(
     assign result_reg_sel   = (state == MULT_RE_X_RE)?      'b00 :
                               (state == MULT_IM_X_IM)?      'b01 :
                               (state == MULT_RE_X_IM_1)?    'b10 :
-                              (state == MULT_RE_X_IM_2)?    'b11 : 'bz;                     // Select where the multiply partial result is stored            
+                              (state == MULT_RE_X_IM_2)?    'b11 : 'b0;                     // Select where the multiply partial result is stored            
 
 
 endmodule // control_logic

@@ -27,7 +27,7 @@ module complex_nr_mult_1#(
     wire        op_1_sel        ;
     wire        op_2_sel        ;
     wire        compute_enable  ;
-    wire [2:0]  result_reg_sel  ;
+    wire [1:0]  result_reg_sel  ;
 
     reg [DATA_WIDTH*2-1 : 0]   re_x_re      ; // Register for storing the result of the real parts multiplication
     reg [DATA_WIDTH*2-1 : 0]   im_x_im      ; // Register for storing the result of the imaginary parts multiplication
