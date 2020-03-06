@@ -18,8 +18,8 @@ module complex_nr_mult_1#(
 
     output wire                         op_ready    , // module is ready to receive new operands
     output wire                         res_val     , // result valid signal
-    output wire     [DATA_WIDTH*2-1:0]  result_re   , // real part of the final result
-    output wire     [DATA_WIDTH*2-1:0]  result_im   , // imaginary part of the real result
+    output reg      [DATA_WIDTH*2-1:0]  result_re   , // real part of the final result
+    output reg      [DATA_WIDTH*2-1:0]  result_im   , // imaginary part of the real result
 );
 
     // Internal signals and registers declaration
@@ -44,6 +44,7 @@ module complex_nr_mult_1#(
     wire [DATA_WIDTH*2-1 : 0]   multiplier_result   ; // Connection for the multiplier module result
 
     // Module instantiation
+
     control_logic CONTROL_LOGIC(
         .clk            (clk           ) ,
         .rstn           (rstn          ) ,
@@ -64,7 +65,85 @@ module complex_nr_mult_1#(
         .result (multiplier_result)
     );
 
+    // Modeling internal registers behaviour
+
+    always @(posedge clk or negedge rstn)
+    begin
+         if(~rstn)                          re_x_re <= 'b0;
+         else if (sw_rst)                   re_x_re <= 'b0;
+         else if (result_reg_sel == 2'b00)  re_x_re <= multiplier_result;
+         else if (op_ready == 'b1)          re_x_re <= 'b0;
+    end
+
+    always @(posedge clk or negedge rstn)
+    begin
+         if(~rstn)                          im_x_im <= 'b0;
+         else if (sw_rst)                   im_x_im <= 'b0;
+         else if (result_reg_sel == 2'b01)  im_x_im <= multiplier_result;
+         else if (op_ready == 'b1)          im_x_im <= 'b0;
+    end
+
+    always @(posedge clk or negedge rstn)
+    begin
+         if(~rstn)                          re_x_im_1 <= 'b0;
+         else if (sw_rst)                   re_x_im_1 <= 'b0;
+         else if (result_reg_sel == 2'b10)  re_x_im_1 <= multiplier_result;
+         else if (op_ready == 'b1)          re_x_im_1 <= 'b0;
+    end
+
+    always @(posedge clk or negedge rstn)
+    begin
+         if(~rstn)                          re_x_im_2 <= 'b0;
+         else if (sw_rst)                   re_x_im_2 <= 'b0;
+         else if (result_reg_sel == 2'b11)  re_x_im_2 <= multiplier_result;
+         else if (op_ready == 'b1)          re_x_im_2 <= 'b0;
+    end
+
+    always @(posedge clk or negedge rstn)
+    begin
+        if(~rstn) 
+        begin
+            op_1_re_register    <= 'b0;    
+            op_1_im_register    <= 'b0;    
+            op_2_re_register    <= 'b0;    
+            op_2_im_register    <= 'b0;    
+        end
+
+        else if(sw_rst) 
+        begin
+            op_1_re_register    <= 'b0;    
+            op_1_im_register    <= 'b0;    
+            op_2_re_register    <= 'b0;    
+            op_2_im_register    <= 'b0;    
+        end
+
+        else if(op_val)
+        begin
+            op_1_re_register    <= op_1_re;    
+            op_1_im_register    <= op_1_im;    
+            op_2_re_register    <= op_2_re;    
+            op_2_im_register    <= op_2_im;   
+        end
+    end
+
+    always @(posedge clk or negedge rstn)
+    begin
+        if(~rstn)               result_re <= 'b0;
+        else if(sw_rst)         result_re <= 'b0;
+        else if(compute_enable) result_re <= re_x_re - im_x_im;
+    end
+
+    always @(posedge clk or negedge rstn)
+    begin
+        if(~rstn)               result_im <= 'b0;
+        else if(sw_rst)         result_im <= 'b0;
+        else if(compute_enable) result_im <= re_x_im_1 + re_x_im_2;
+    end
+
+    // Assigning the inputs for the multiplier module
     
+    assign multiplier_op_1 = (op_1_sel == 'b0)? op_1_re : op_1_im;
+    assign multiplier_op_2 = (op_1_sel == 'b0)? op_2_re : op_2_im;
 
 
 endmodule // complex_nr_mult_1

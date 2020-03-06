@@ -38,7 +38,7 @@ module control_logic(
         if(~rstn) state <= IDLE;
         else if (sw_rst) state <= IDLE;
         else state <= next_state;
-    end
+    end 
 
     always @(posedge clk)
     begin
