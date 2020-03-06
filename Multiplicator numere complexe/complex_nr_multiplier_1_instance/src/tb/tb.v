@@ -9,8 +9,10 @@ module complex_nr_mult_tb#(
     parameter OP_2_RE       = 'd3,
     parameter OP_2_IM       = 'd6,
 )(
-    input   clk     , // clock signal
-    input   rstn    , // asynchronous reset active 0
+    input   clk         , // clock signal
+    input   rstn        , // asynchronous reset active 0
+    input   op_ready    , // module is ready to receive new operands
+    input   res_val     , // result valid signal
 
     output reg                       sw_rst              , // software reset active 1
     output reg                       op_val              , // data valid signal
@@ -24,18 +26,54 @@ module complex_nr_mult_tb#(
 
     // Task for driving operands on bus
     task write_operands;
-        input op_1_re_value;
-        input op_1_im_value;
-        input op_2_re_value;
-        input op_2_im_value;
+        input [DATA_WIDTH-1 : 0] op_1_re_value;
+        input [DATA_WIDTH-1 : 0] op_1_im_value;
+        input [DATA_WIDTH-1 : 0] op_2_re_value;
+        input [DATA_WIDTH-1 : 0] op_2_im_value;
 
-        always @(posedge clk)
         begin
             op_1_re <= op_1_re_value;
             op_1_im <= op_1_im_value;
             op_2_re <= op_2_re_value;
             op_2_im <= op_2_im_value;
+            $display("%M %t - OPERANDS VALUES ON THE BUS", $time);
         end
     endtask
+
+    task module_wait; 
+        input [9:0]  wait_cycles;   // how many cycles to wait
+        integer i;
+        begin
+            for (i=0; i<wait_cycles; i=i+1) begin
+            @(posedge clk);
+            end
+            $display("%M %t - WAIT  -> %d clock cycles", $time, wait_cycles);
+        end
+    endtask 
+
+    task write_valid;
+        begin
+            op_val <= 'b1;
+            $display("%M %t - OPERAND VALID SIGNAL ASSERTED", $time);
+            @(posedge op_ready);
+            op_val <= 'b0;
+            $display("%M %t - OPERAND VALID SIGNAL DEASSERTED", $time);
+        end    
+    endtask
+
+    task write_result_ready;
+        input  [9:0] wait_cycles;
+        begin
+            @(posedge res_val);
+            wait(wait_cycles);
+            res_ready <= 'b1;
+            $display("%M %t - RESULT READY SIGNAL ASSERTED", $time);
+            #(posedge clk);
+            res_ready <= 'b0;
+            $display("%M %t - OPERAND VALID SIGNAL DEASSERTED", $time);
+        end    
+    endtask
+
+
 
 endmodule // complex_nr_mult_tb
