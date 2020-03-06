@@ -7,6 +7,8 @@ The project consists of implementing an complex numbers multiplier in three ways
 
 For testing and simulation ModelSim PE is used. In order to test the modules, the module, testbench and monitor files have to be compiled.
 
+## Language
+Altough the README.md is written in English, the project folders and documentation is written in Romanian, as a requirement for the course. The Verilog code will be written in english (variable names, parameters, comments etc.) for further use and readability.
 
 ## License
 
