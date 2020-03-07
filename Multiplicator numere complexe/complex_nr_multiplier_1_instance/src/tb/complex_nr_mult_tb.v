@@ -106,10 +106,10 @@
 
         task test_scenario_corner_case;          
             begin
-                op_1_re_reg = 'b1;
-                op_1_im_reg = 'b1;
-                op_2_re_reg = 'b1;
-                op_2_im_reg = 'b1;
+                op_1_re_reg = {DATA_WIDTH{1'b1}};
+                op_1_im_reg = {DATA_WIDTH{1'b1}};
+                op_2_re_reg = {DATA_WIDTH{1'b1}};
+                op_2_im_reg = {DATA_WIDTH{1'b1}};
 
                 $display("%M %t - STARTED TEST SCENARIO WITH CORNER CASE VALUES", $time);
                 write_operands(op_1_re_reg,op_1_im_reg,op_2_re_reg,op_2_im_reg);
