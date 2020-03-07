@@ -3,21 +3,21 @@
 // Date:    06.03.2020
 
 module control_logic(
-    input                   clk           , // clock signal
-    input                   rstn          , // asynchronous reset active 0
-    input                   sw_rst        , // software reset active 1
-    input                   op_val        , // data valid signal
-    input                   res_ready     , // the consumer is ready to receive the result
+    input                   clk                 , // clock signal
+    input                   rstn                , // asynchronous reset active 0
+    input                   sw_rst              , // software reset active 1
+    input                   op_val              , // data valid signal
+    input                   res_ready           , // the consumer is ready to receive the result
 
-    output wire             op_ready          , // module is ready to receive new operands
-    output wire             res_val           , // result valid signal
-    output wire             mult_1_op_1_sel   , // selection signal for operand 1 of the first multiply module
-    output wire             mult_1_op_2_sel   , // selection signal for operand 2 of the first multiply module
-    output wire             mult_2_op_1_sel   , // selection signal for operand 1 of the second multiply module
-    output wire             mult_2_op_2_sel   , // selection signal for operand 2 of the second multiply module
-    output wire             mult_1_res_sel    , // selection signal for result register for the first multiply module
-    output wire             mult_2_res_sel    , // selection signal for result register for the second multiply module
-    output wire             compute_enable      // enable for final result computation
+    output wire             op_ready            , // module is ready to receive new operands
+    output wire             res_val             , // result valid signal
+    output wire             mult_1_op_1_sel     , // selection signal for operand 1 of the first multiply module
+    output wire             mult_1_op_2_sel     , // selection signal for operand 2 of the first multiply module
+    output wire             mult_2_op_1_sel     , // selection signal for operand 1 of the second multiply module
+    output wire             mult_2_op_2_sel     , // selection signal for operand 2 of the second multiply module
+    output wire             mult_1_res_sel      , // selection signal for result register for the first multiply module
+    output wire             mult_2_res_sel      , // selection signal for result register for the second multiply module
+    output wire             compute_enable        // enable for final result computation
 );
 
     //State parameters
