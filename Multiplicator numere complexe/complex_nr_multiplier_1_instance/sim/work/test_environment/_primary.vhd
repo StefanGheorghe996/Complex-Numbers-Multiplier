@@ -6,6 +6,6 @@ entity test_environment is
         CLOCK_PERIOD    : integer := 5;
         RST_DELAY       : integer := 30;
         RST_DURATION    : integer := 2;
-        TEST_SCENARIO   : integer := 1
+        TEST_SCENARIO   : integer := 0
     );
 end test_environment;

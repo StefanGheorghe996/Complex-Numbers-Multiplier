@@ -45,6 +45,7 @@ module control_logic(
         case (state)
             IDLE:   if (~op_val) next_state <= IDLE;
                     else if(op_val) next_state <= LOAD_OPERANDS;
+                    else next_state <= IDLE;
             
             LOAD_OPERANDS : next_state <= MULT_RE_X_RE;
 
@@ -60,6 +61,7 @@ module control_logic(
 
             WAIT_RESULT_RDY :   if (~res_ready) next_state <= WAIT_RESULT_RDY;
                                 else if(res_ready) next_state <= IDLE;
+                                else next_state <= IDLE;
 
             default: next_state <= IDLE;
         endcase       
