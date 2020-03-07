@@ -61,7 +61,7 @@ module control_logic(
 
             WAIT_RESULT_RDY :   if (~res_ready) next_state <= WAIT_RESULT_RDY;
                                 else if(res_ready) next_state <= IDLE;
-                                else next_state <= IDLE;
+                                else next_state <= WAIT_RESULT_RDY;
 
             default: next_state <= IDLE;
         endcase       
