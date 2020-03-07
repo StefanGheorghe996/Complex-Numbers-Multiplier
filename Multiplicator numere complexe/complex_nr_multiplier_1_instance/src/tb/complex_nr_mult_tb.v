@@ -77,7 +77,7 @@
 
         task test_scenario_selected_values;
             begin
-                $display("%M %t - STARTED FIRST TEST SCENARIO WITH SELECTED VALUES", $time);
+                $display("%M %t - STARTED TEST SCENARIO WITH SELECTED VALUES", $time);
                 write_operands(2,3,4,2);
                 module_wait(2);
                 write_valid;
@@ -94,7 +94,7 @@
                 op_2_re_reg = $random;
                 op_2_im_reg = $random;
             
-                $display("%M %t - STARTED FIRST TEST SCENARIO WITH RANDOM VALUES", $time);
+                $display("%M %t - STARTED TEST SCENARIO WITH RANDOM VALUES", $time);
                 write_operands(op_1_re_reg,op_1_im_reg,op_2_re_reg,op_2_im_reg);
                 module_wait(2);
                 write_valid;
@@ -111,12 +111,35 @@
                 op_2_re_reg = 'b1;
                 op_2_im_reg = 'b1;
 
-                $display("%M %t - STARTED FIRST TEST SCENARIO WITH CORNER CASE VALUES", $time);
+                $display("%M %t - STARTED TEST SCENARIO WITH CORNER CASE VALUES", $time);
                 write_operands(op_1_re_reg,op_1_im_reg,op_2_re_reg,op_2_im_reg);
                 module_wait(2);
                 write_valid;
                 module_wait(20);
                 write_result_ready;
+                $stop;
+            end
+        endtask
+
+        task test_scenario_multiple_transactions;
+            input [9:0] transaction_number;
+            integer i;
+            begin
+                $display("%M %t - STARTED FIRST TEST SCENARIO WITH MULTIPLE TRANSACTIONS VALUES", $time);
+                for (i=0; i<transaction_number; i=i+1) 
+                begin
+                    op_1_re_reg = $random;
+                    op_1_im_reg = $random;
+                    op_2_re_reg = $random;
+                    op_2_im_reg = $random;
+
+
+                    write_operands(op_1_re_reg,op_1_im_reg,op_2_re_reg,op_2_im_reg);
+                    module_wait(2);
+                    write_valid;
+                    module_wait(20);
+                    write_result_ready;
+                end
                 $stop;
             end
         endtask
@@ -128,6 +151,7 @@
                 0:  test_scenario_selected_values;
                 1:  test_scenario_random_values;
                 2:  test_scenario_corner_case; 
+                3:  test_scenario_multiple_transactions(3);
                 default:    test_scenario_selected_values;      
             endcase      
         end
