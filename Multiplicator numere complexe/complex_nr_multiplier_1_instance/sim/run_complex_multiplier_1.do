@@ -13,4 +13,6 @@ add wave test_environment/DUT/CONTROL_LOGIC/*
 add wave test_environment/TESTBENCH/*
 add wave test_environment/MONITOR/*
 
-run 200
+do wave.do
+
+run -all

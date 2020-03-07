@@ -2,7 +2,8 @@ library verilog;
 use verilog.vl_types.all;
 entity complex_nr_mult_tb is
     generic(
-        DATA_WIDTH      : integer := 8
+        DATA_WIDTH      : integer := 8;
+        TEST_SCENARIO   : integer := 0
     );
     port(
         clk             : in     vl_logic;

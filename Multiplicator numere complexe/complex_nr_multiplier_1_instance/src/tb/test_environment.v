@@ -8,6 +8,7 @@ module test_environment();
     parameter CLOCK_PERIOD = 5;
     parameter RST_DELAY = 30;
     parameter RST_DURATION = 2;
+    parameter TEST_SCENARIO = 1; // 0 = test scenario with values specified in the testbench, 1 = test scenario with random values, 2 =  test scenarios with corner case values
 
     //Internal signals
     wire                        clk      ;
@@ -41,7 +42,7 @@ module test_environment();
         .result_im  (result_im)
     );
 
-    complex_nr_mult_tb #(DATA_WIDTH) TESTBENCH(
+    complex_nr_mult_tb #(DATA_WIDTH,TEST_SCENARIO) TESTBENCH(
         .clk        (clk      ),
         .rstn       (rstn     ),
         .op_ready   (op_ready ),

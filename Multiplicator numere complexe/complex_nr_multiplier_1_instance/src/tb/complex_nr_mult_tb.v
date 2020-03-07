@@ -3,7 +3,8 @@
     // Date:    06.03.2020
 
     module complex_nr_mult_tb#(
-        parameter DATA_WIDTH    = 8
+        parameter DATA_WIDTH    = 8,
+        parameter TEST_SCENARIO = 0
     )(
         input   clk         , // clock signal
         input   rstn        , // asynchronous reset active 0
@@ -19,6 +20,11 @@
         output reg [DATA_WIDTH-1 : 0]    op_2_im               // input for the imaginary part of the second operand
 
     );
+        // Internal signals and registers
+        reg [DATA_WIDTH-1 : 0] op_1_re_reg;
+        reg [DATA_WIDTH-1 : 0] op_1_im_reg;
+        reg [DATA_WIDTH-1 : 0] op_2_re_reg;
+        reg [DATA_WIDTH-1 : 0] op_2_im_reg;
 
         // Task for driving operands on bus
         task write_operands;
@@ -69,10 +75,44 @@
             end    
         endtask
 
-        task test_scenario_1;
+        task test_scenario_selected_values;
             begin
-                $display("%M %t - STARTED FIRST TEST SCENARIO", $time);
+                $display("%M %t - STARTED FIRST TEST SCENARIO WITH SELECTED VALUES", $time);
                 write_operands(2,3,4,2);
+                module_wait(2);
+                write_valid;
+                module_wait(20);
+                write_result_ready;
+                $stop;
+            end
+        endtask
+
+        task test_scenario_random_values;
+            begin
+                op_1_re_reg = $random;
+                op_1_im_reg = $random;
+                op_2_re_reg = $random;
+                op_2_im_reg = $random;
+            
+                $display("%M %t - STARTED FIRST TEST SCENARIO WITH RANDOM VALUES", $time);
+                write_operands(op_1_re_reg,op_1_im_reg,op_2_re_reg,op_2_im_reg);
+                module_wait(2);
+                write_valid;
+                module_wait(20);
+                write_result_ready;
+                $stop;
+            end
+        endtask
+
+        task test_scenario_corner_case;          
+            begin
+                op_1_re_reg = 'b1;
+                op_1_im_reg = 'b1;
+                op_2_re_reg = 'b1;
+                op_2_im_reg = 'b1;
+
+                $display("%M %t - STARTED FIRST TEST SCENARIO WITH CORNER CASE VALUES", $time);
+                write_operands(op_1_re_reg,op_1_im_reg,op_2_re_reg,op_2_im_reg);
                 module_wait(2);
                 write_valid;
                 module_wait(20);
@@ -84,9 +124,12 @@
         initial 
         begin
             wait(~rstn);
-            test_scenario_1;
+            case (TEST_SCENARIO)
+                0:  test_scenario_selected_values;
+                1:  test_scenario_random_values;
+                2:  test_scenario_corner_case; 
+                default:    test_scenario_selected_values;      
+            endcase      
         end
-
-
 
     endmodule // complex_nr_mult_tb
