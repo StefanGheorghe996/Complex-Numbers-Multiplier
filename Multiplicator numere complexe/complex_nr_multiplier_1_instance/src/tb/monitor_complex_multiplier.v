@@ -41,7 +41,7 @@ module monitor_complex_multiplier#(
 
     always @(posedge clk)
     begin
-        if (res_ready) begin
+        if (res_ready && res_val) begin
             if(result_re == predicted_result_re)
                 $display("%M %t - REAL PART OF THE RESULT IS COMPUTED CORRECTLY", $time);
             else
@@ -51,7 +51,7 @@ module monitor_complex_multiplier#(
 
     always @(posedge clk)
     begin
-        if (res_ready) begin
+        if (res_ready  && res_val) begin
             if(result_im == predicted_result_im)
                 $display("%M %t - IMAGINARY PART OF THE RESULT IS COMPUTED CORRECTLY", $time);
             else
