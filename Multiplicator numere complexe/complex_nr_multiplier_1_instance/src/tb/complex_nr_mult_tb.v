@@ -52,6 +52,7 @@
                 op_val <= 'b1;
                 $display("%M %t - OPERAND VALID SIGNAL ASSERTED", $time);
                 @(posedge clk);
+                @(posedge clk);
                 op_val <= 'b0;
                 $display("%M %t - OPERAND VALID SIGNAL DEASSERTED", $time);
             end    

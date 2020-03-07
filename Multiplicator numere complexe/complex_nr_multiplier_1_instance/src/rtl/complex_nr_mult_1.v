@@ -73,6 +73,7 @@ module complex_nr_mult_1#(
          else if (sw_rst)                   re_x_re <= 'b0;
          else if (result_reg_sel == 2'b00)  re_x_re <= multiplier_result;
          else if (op_ready == 'b1)          re_x_re <= 'b0;
+         else                               re_x_re <= re_x_re;
     end
 
     always @(posedge clk or negedge rstn)
@@ -81,6 +82,7 @@ module complex_nr_mult_1#(
          else if (sw_rst)                   im_x_im <= 'b0;
          else if (result_reg_sel == 2'b01)  im_x_im <= multiplier_result;
          else if (op_ready == 'b1)          im_x_im <= 'b0;
+         else                               im_x_im <= im_x_im;
     end
 
     always @(posedge clk or negedge rstn)
@@ -89,6 +91,7 @@ module complex_nr_mult_1#(
          else if (sw_rst)                   re_x_im_1 <= 'b0;
          else if (result_reg_sel == 2'b10)  re_x_im_1 <= multiplier_result;
          else if (op_ready == 'b1)          re_x_im_1 <= 'b0;
+         else                               re_x_im_1 <= re_x_im_1;
     end
 
     always @(posedge clk or negedge rstn)
@@ -97,6 +100,7 @@ module complex_nr_mult_1#(
          else if (sw_rst)                   re_x_im_2 <= 'b0;
          else if (result_reg_sel == 2'b11)  re_x_im_2 <= multiplier_result;
          else if (op_ready == 'b1)          re_x_im_2 <= 'b0;
+         else                               re_x_im_2 <= re_x_im_2;
     end
 
     always @(posedge clk or negedge rstn)
@@ -143,7 +147,7 @@ module complex_nr_mult_1#(
     // Assigning the inputs for the multiplier module
     
     assign multiplier_op_1 = (op_1_sel == 'b0)? op_1_re : op_1_im;
-    assign multiplier_op_2 = (op_1_sel == 'b0)? op_2_re : op_2_im;
+    assign multiplier_op_2 = (op_2_sel == 'b0)? op_2_re : op_2_im;
 
 
 endmodule // complex_nr_mult_1
