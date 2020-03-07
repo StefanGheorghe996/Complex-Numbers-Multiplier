@@ -24,10 +24,15 @@ module complex_nr_mult_2#(
 
     // Internal signals and registers declaration
 
-    wire        op_1_sel        ;
-    wire        op_2_sel        ;
-    wire        compute_enable  ;
-    wire [1:0]  result_reg_sel  ;
+    
+    wire compute_enable     ;
+    wire mult_1_op_1_sel    ;
+    wire mult_1_op_2_sel    ;
+    wire mult_2_op_1_sel    ;
+    wire mult_2_op_2_sel    ;
+    wire mult_1_res_sel     ;
+    wire mult_2_res_sel     ;
+    
 
     reg [DATA_WIDTH*2-1 : 0]   re_x_re      ; // Register for storing the result of the real parts multiplication
     reg [DATA_WIDTH*2-1 : 0]   im_x_im      ; // Register for storing the result of the imaginary parts multiplication
@@ -39,30 +44,43 @@ module complex_nr_mult_2#(
     reg [DATA_WIDTH-1 : 0]  op_2_re_register ; // Register for storing real part of the second operand
     reg [DATA_WIDTH-1 : 0]  op_2_im_register ; // Register for storing imaginary part of the second operand
 
-    wire [DATA_WIDTH-1 : 0]     multiplier_op_1     ; // Connection for the multiplier module operand 1
-    wire [DATA_WIDTH-1 : 0]     multiplier_op_2     ; // Connection for the multiplier module operand 2
-    wire [DATA_WIDTH*2-1 : 0]   multiplier_result   ; // Connection for the multiplier module result
+    wire [DATA_WIDTH-1 : 0]     multiplier_1_op_1     ; // Connection for the multiplier module 1 operand 1
+    wire [DATA_WIDTH-1 : 0]     multiplier_1_op_2     ; // Connection for the multiplier module 1 operand 2
+    wire [DATA_WIDTH*2-1 : 0]   multiplier_1_result   ; // Connection for the multiplier module 1 result
+
+    wire [DATA_WIDTH-1 : 0]     multiplier_2_op_1     ; // Connection for the multiplier module 2 operand 1
+    wire [DATA_WIDTH-1 : 0]     multiplier_2_op_2     ; // Connection for the multiplier module 2 operand 2
+    wire [DATA_WIDTH*2-1 : 0]   multiplier_2_result   ; // Connection for the multiplier module 2 result
 
     // Module instantiation
 
     control_logic CONTROL_LOGIC(
-        .clk            (clk           ) ,
-        .rstn           (rstn          ) ,
-        .sw_rst         (sw_rst        ) ,
-        .op_val         (op_val        ) ,
-        .res_ready      (res_ready     ) ,
-        .op_ready       (op_ready      ) ,
-        .res_val        (res_val       ) ,
-        .op_1_sel       (op_1_sel      ) ,
-        .op_2_sel       (op_2_sel      ) ,
-        .compute_enable (compute_enable) ,
-        .result_reg_sel (result_reg_sel) 
+        .clk               (clk            ),  
+        .rstn              (rstn           ),  
+        .sw_rst            (sw_rst         ),  
+        .op_val            (op_val         ),  
+        .res_ready         (res_ready      ),  
+        .op_ready          (op_ready       ),  
+        .res_val           (res_val        ),  
+        .mult_1_op_1_sel   (mult_1_op_1_sel),  
+        .mult_1_op_2_sel   (mult_1_op_2_sel),  
+        .mult_2_op_1_sel   (mult_2_op_1_sel),  
+        .mult_2_op_2_sel   (mult_2_op_2_sel),  
+        .mult_1_res_sel    (mult_1_res_sel ),  
+        .mult_2_res_sel    (mult_2_res_sel ),  
+        .compute_enable    (compute_enable )  
     );
 
     uint8_mult  #(DATA_WIDTH) MULTIPLIER_1(
-        .op1    (multiplier_op_1  ),
-        .op2    (multiplier_op_2  ),
-        .result (multiplier_result)
+        .op1    (multiplier_1_op_1  ),
+        .op2    (multiplier_1_op_2  ),
+        .result (multiplier_1_result)
+    );
+
+    uint8_mult  #(DATA_WIDTH) MULTIPLIER_2(
+        .op1    (multiplier_2_op_1  ),
+        .op2    (multiplier_2_op_2  ),
+        .result (multiplier_2_result)
     );
 
     // Modeling internal registers behaviour
@@ -71,7 +89,7 @@ module complex_nr_mult_2#(
     begin
          if(~rstn)                          re_x_re <= 'b0;
          else if (sw_rst)                   re_x_re <= 'b0;
-         else if (result_reg_sel == 2'b00)  re_x_re <= multiplier_result;
+         else if (mult_1_res_sel == 'b0)    re_x_re <= multiplier_1_result;
          else if (op_ready == 'b1)          re_x_re <= 'b0;
          else                               re_x_re <= re_x_re;
     end
@@ -80,7 +98,7 @@ module complex_nr_mult_2#(
     begin
          if(~rstn)                          im_x_im <= 'b0;
          else if (sw_rst)                   im_x_im <= 'b0;
-         else if (result_reg_sel == 2'b01)  im_x_im <= multiplier_result;
+         else if (mult_1_res_sel == 'b1)  im_x_im <= multiplier_1_result;
          else if (op_ready == 'b1)          im_x_im <= 'b0;
          else                               im_x_im <= im_x_im;
     end
@@ -89,7 +107,7 @@ module complex_nr_mult_2#(
     begin
          if(~rstn)                          re_x_im_1 <= 'b0;
          else if (sw_rst)                   re_x_im_1 <= 'b0;
-         else if (result_reg_sel == 2'b10)  re_x_im_1 <= multiplier_result;
+         else if (mult_2_res_sel == 'b0)    re_x_im_1 <= multiplier_2_result;
          else if (op_ready == 'b1)          re_x_im_1 <= 'b0;
          else                               re_x_im_1 <= re_x_im_1;
     end
@@ -98,7 +116,7 @@ module complex_nr_mult_2#(
     begin
          if(~rstn)                          re_x_im_2 <= 'b0;
          else if (sw_rst)                   re_x_im_2 <= 'b0;
-         else if (result_reg_sel == 2'b11)  re_x_im_2 <= multiplier_result;
+         else if (mult_2_res_sel == 'b1)    re_x_im_2 <= multiplier_2_result;
          else if (op_ready == 'b1)          re_x_im_2 <= 'b0;
          else                               re_x_im_2 <= re_x_im_2;
     end
@@ -146,8 +164,10 @@ module complex_nr_mult_2#(
 
     // Assigning the inputs for the multiplier module
     
-    assign multiplier_op_1 = (op_1_sel == 'b0)? op_1_re : op_1_im;
-    assign multiplier_op_2 = (op_2_sel == 'b0)? op_2_re : op_2_im;
+    assign multiplier_1_op_1 = (mult_1_op_1_sel == 'b0)? op_1_re_register : op_1_im_register;
+    assign multiplier_1_op_2 = (mult_1_op_2_sel == 'b0)? op_2_re_register : op_2_im_register;
+    assign multiplier_2_op_1 = (mult_2_op_1_sel == 'b0)? op_1_re_register : op_1_im_register;
+    assign multiplier_2_op_2 = (mult_2_op_2_sel == 'b0)? op_2_im_register : op_2_re_register;
 
 
 endmodule // complex_nr_mult_1
