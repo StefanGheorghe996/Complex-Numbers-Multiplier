@@ -98,7 +98,7 @@ module complex_nr_mult_2#(
     begin
          if(~rstn)                          im_x_im <= 'b0;
          else if (sw_rst)                   im_x_im <= 'b0;
-         else if (mult_1_res_sel == 'b1)  im_x_im <= multiplier_1_result;
+         else if (mult_1_res_sel == 'b1)    im_x_im <= multiplier_1_result;
          else if (op_ready == 'b1)          im_x_im <= 'b0;
          else                               im_x_im <= im_x_im;
     end
