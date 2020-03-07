@@ -1,0 +1,83 @@
+m255
+K3
+13
+cModel Technology
+Z0 dD:\Master - SECI\An 1\Semestrul 2\Limbaje de descriere hardware (LDH)\Proiect\Multiplicator numere complexe\complex_nr_multiplier_1_instance\sim
+T_opt
+Z1 VD=d`YEYiQ14^J>TK1[8[>1
+Z2 04 13 4 work clock_rst_gen fast 0
+Z3 =1-00ff40cb0c3f-5e62a356-2ac-2a00
+Z4 o-quiet -auto_acc_if_foreign -work work
+Z5 n@_opt
+Z6 OE;O;6.6d;45
+Z7 dD:\Master - SECI\An 1\Semestrul 2\Limbaje de descriere hardware (LDH)\Proiect\Multiplicator numere complexe\complex_nr_multiplier_1_instance\sim
+vclock_rst_gen
+Z8 I41SkO]_:0e=1QB9_L]PCQ1
+Z9 V8eI@B>S_VTiCX@bG>SN442
+R7
+Z10 w1583501203
+Z11 8D:/Master - SECI/An 1/Semestrul 2/Limbaje de descriere hardware (LDH)/Proiect/Multiplicator numere complexe/complex_nr_multiplier_1_instance/src/tb/clock_rst_gen.v
+Z12 FD:/Master - SECI/An 1/Semestrul 2/Limbaje de descriere hardware (LDH)/Proiect/Multiplicator numere complexe/complex_nr_multiplier_1_instance/src/tb/clock_rst_gen.v
+L0 5
+Z13 OE;L;6.6d;45
+r1
+31
+Z14 o-work work -L mtiAvm -L mtiOvm -L mtiUPF
+Z15 !s100 iJdY0^BEK[1@RbQg6c:Cc2
+!s85 0
+vcomplex_nr_mult_1
+Z16 I]LoXJENPkZz7bRSa;;jBY0
+Z17 V8fHL?8DVk5e0kAPFk5i?L1
+R7
+Z18 w1583522618
+Z19 8D:/Master - SECI/An 1/Semestrul 2/Limbaje de descriere hardware (LDH)/Proiect/Multiplicator numere complexe/complex_nr_multiplier_1_instance/src/rtl/complex_nr_mult_1.v
+Z20 FD:/Master - SECI/An 1/Semestrul 2/Limbaje de descriere hardware (LDH)/Proiect/Multiplicator numere complexe/complex_nr_multiplier_1_instance/src/rtl/complex_nr_mult_1.v
+L0 5
+R13
+r1
+31
+R14
+Z21 !s100 =c6WD;M>bFBgWZHihn5D=2
+!s85 0
+vcomplex_nr_mult_tb
+Z22 I@FWmO=KU[66;aMkOFGI4d2
+Z23 V2W19f7cL_XLdZ4z`gGozM3
+R7
+Z24 w1583522531
+Z25 8D:/Master - SECI/An 1/Semestrul 2/Limbaje de descriere hardware (LDH)/Proiect/Multiplicator numere complexe/complex_nr_multiplier_1_instance/src/tb/tb.v
+Z26 FD:/Master - SECI/An 1/Semestrul 2/Limbaje de descriere hardware (LDH)/Proiect/Multiplicator numere complexe/complex_nr_multiplier_1_instance/src/tb/tb.v
+L0 5
+R13
+r1
+31
+R14
+Z27 !s100 JKjZnK5OIVcf<l@jBNOcX1
+!s85 0
+vcontrol_logic
+Z28 In<;Oj;Oe_<Eo5U<>Y`cMl0
+Z29 VhSO05gczFB[B_fB^8z50i1
+R7
+Z30 w1583522633
+Z31 8D:/Master - SECI/An 1/Semestrul 2/Limbaje de descriere hardware (LDH)/Proiect/Multiplicator numere complexe/complex_nr_multiplier_1_instance/src/rtl/control_logic.v
+Z32 FD:/Master - SECI/An 1/Semestrul 2/Limbaje de descriere hardware (LDH)/Proiect/Multiplicator numere complexe/complex_nr_multiplier_1_instance/src/rtl/control_logic.v
+L0 5
+R13
+r1
+31
+R14
+Z33 !s100 adNV89TjzNbbGYRo:dafl2
+!s85 0
+vuint8_mult
+Z34 IVCdb`^zSJD=CR]g7M1RC]2
+Z35 VJO9m9gzQ@S<>A:7TgFQi`3
+R7
+Z36 w1583496608
+Z37 8D:/Master - SECI/An 1/Semestrul 2/Limbaje de descriere hardware (LDH)/Proiect/Multiplicator numere complexe/complex_nr_multiplier_1_instance/src/rtl/uint8_mult.v
+Z38 FD:/Master - SECI/An 1/Semestrul 2/Limbaje de descriere hardware (LDH)/Proiect/Multiplicator numere complexe/complex_nr_multiplier_1_instance/src/rtl/uint8_mult.v
+L0 3
+R13
+r1
+31
+R14
+Z39 !s100 7McOaYGhM5mY2<jkVXGob3
+!s85 0

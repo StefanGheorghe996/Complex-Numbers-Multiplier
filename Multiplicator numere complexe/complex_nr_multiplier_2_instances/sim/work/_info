@@ -1,0 +1,119 @@
+m255
+K3
+13
+cModel Technology
+Z0 dD:\Master - SECI\An 1\Semestrul 2\Limbaje de descriere hardware (LDH)\Proiect\Multiplicator numere complexe\complex_nr_multiplier_1_instance\sim
+T_opt
+VD=d`YEYiQ14^J>TK1[8[>1
+04 13 4 work clock_rst_gen fast 0
+=1-00ff40cb0c3f-5e62a356-2ac-2a00
+Z1 o-quiet -auto_acc_if_foreign -work work
+n@_opt
+Z2 OE;O;6.6d;45
+Z3 dD:\Master - SECI\An 1\Semestrul 2\Limbaje de descriere hardware (LDH)\Proiect\Multiplicator numere complexe\complex_nr_multiplier_1_instance\sim
+T_opt1
+Vec3EWV2dS3f;GLW76g6zN0
+04 16 4 work test_environment fast 0
+=1-00ff40cb0c3f-5e6340d4-3e5-e74
+R1
+n@_opt1
+R2
+R3
+vclock_rst_gen
+V8eI@B>S_VTiCX@bG>SN442
+r1
+31
+I41SkO]_:0e=1QB9_L]PCQ1
+R3
+w1583501203
+8../src/tb/clock_rst_gen.v
+F../src/tb/clock_rst_gen.v
+L0 5
+Z4 OE;L;6.6d;45
+Z5 o-work work -L mtiAvm -L mtiOvm -L mtiUPF
+!s85 0
+!s100 iJdY0^BEK[1@RbQg6c:Cc2
+vcomplex_nr_mult_1
+V8fHL?8DVk5e0kAPFk5i?L1
+r1
+31
+IX^WdKNO6ShTW219dZGT1_1
+R3
+w1583564363
+8../src/rtl/complex_nr_mult_1.v
+F../src/rtl/complex_nr_mult_1.v
+L0 5
+R4
+R5
+!s85 0
+!s100 7>AVe:gi0P`DW>=k9`agP3
+vcomplex_nr_mult_tb
+VPKM;cGoGWLZ_P`Jc?GMGA3
+r1
+31
+I`oboC@7?o<g?PToWi<IE81
+R3
+w1583591438
+8../src/tb/complex_nr_mult_tb.v
+F../src/tb/complex_nr_mult_tb.v
+L0 5
+R4
+R5
+!s85 0
+!s100 UT2:RE@`86FJ27]?AF5<I3
+vcontrol_logic
+VhSO05gczFB[B_fB^8z50i1
+r1
+31
+IYPzZ@Ml^@^D1aY?D=X[aJ1
+R3
+w1583591674
+8../src/rtl/control_logic.v
+F../src/rtl/control_logic.v
+L0 5
+R4
+R5
+!s85 0
+!s100 Ff9Cbb9KUF<b^k93j1Z>:3
+vmonitor_complex_multiplier
+VBl80eecEOLV71=AMY^_:22
+r1
+!s85 0
+31
+IZzU1AzPJAH?czjBmmkjPo0
+R3
+w1583591136
+8../src/tb/monitor_complex_multiplier.v
+F../src/tb/monitor_complex_multiplier.v
+L0 5
+R4
+R5
+!s100 gj>KZMk0c72W0F3Vm_ez33
+vtest_environment
+VFIl7fa9<VN7BPW9i1^6Si1
+r1
+31
+I[eZ8hoMMdW^6NogNc;[PC3
+R3
+w1583591784
+8../src/tb/test_environment.v
+F../src/tb/test_environment.v
+L0 5
+R4
+R5
+!s85 0
+!s100 Q=Igde>:dO4ljhlX9hBeA3
+vuint8_mult
+VJO9m9gzQ@S<>A:7TgFQi`3
+r1
+31
+IVCdb`^zSJD=CR]g7M1RC]2
+R3
+w1583496608
+8../src/rtl/uint8_mult.v
+F../src/rtl/uint8_mult.v
+L0 3
+R4
+R5
+!s85 0
+!s100 7McOaYGhM5mY2<jkVXGob3
