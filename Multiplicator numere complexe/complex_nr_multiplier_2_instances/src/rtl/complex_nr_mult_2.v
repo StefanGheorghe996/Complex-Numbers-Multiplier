@@ -59,7 +59,7 @@ module complex_nr_mult_2#(
         .result_reg_sel (result_reg_sel) 
     );
 
-    uint8_mult  #(DATA_WIDTH) MULTIPLIER(
+    uint8_mult  #(DATA_WIDTH) MULTIPLIER_1(
         .op1    (multiplier_op_1  ),
         .op2    (multiplier_op_2  ),
         .result (multiplier_result)
