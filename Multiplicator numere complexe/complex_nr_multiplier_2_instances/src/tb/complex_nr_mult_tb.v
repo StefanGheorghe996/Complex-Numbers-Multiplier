@@ -81,7 +81,7 @@
                 write_operands(2,3,4,2);
                 module_wait(2);
                 write_valid;
-                module_wait(20);
+                module_wait(200);
                 write_result_ready;
                 $stop;
             end

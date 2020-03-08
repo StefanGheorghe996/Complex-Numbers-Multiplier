@@ -167,7 +167,7 @@ module complex_nr_mult_2#(
     assign multiplier_1_op_1 = (mult_1_op_1_sel == 'b0)? op_1_re_register : op_1_im_register;
     assign multiplier_1_op_2 = (mult_1_op_2_sel == 'b0)? op_2_re_register : op_2_im_register;
     assign multiplier_2_op_1 = (mult_2_op_1_sel == 'b0)? op_1_re_register : op_1_im_register;
-    assign multiplier_2_op_2 = (mult_2_op_2_sel == 'b0)? op_2_im_register : op_2_re_register;
+    assign multiplier_2_op_2 = (mult_2_op_2_sel == 'b0)? op_2_re_register : op_2_im_register;
 
 
 endmodule // complex_nr_mult_1
