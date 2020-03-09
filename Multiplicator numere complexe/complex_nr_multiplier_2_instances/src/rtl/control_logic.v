@@ -44,9 +44,8 @@ module control_logic(
     always @(posedge clk)
     begin
         case (state)
-            IDLE:   if (op_val)         next_state  <= LOAD_OPERANDS;
-                    else if (~op_val)   next_state  <= IDLE;
-                    else                next_state  <= IDLE;
+            IDLE:   if (~op_val) next_state <= IDLE;
+                    else         next_state <= LOAD_OPERANDS;
                 
             LOAD_OPERANDS : next_state <= FIRST_STAGE_MULTIPLY;
 
@@ -56,18 +55,17 @@ module control_logic(
 
             COMPUTE_RESULT : next_state <= WAIT_RESULT_RDY; 
 
-            WAIT_RESULT_RDY :   if (res_ready)          next_state <= IDLE;
-                                else if (~res_ready)    next_state <= WAIT_RESULT_RDY;
-                                else                    next_state <= WAIT_RESULT_RDY;
+            WAIT_RESULT_RDY :   if (~res_ready) next_state <= WAIT_RESULT_RDY;
+                                else            next_state <= IDLE;
         
         endcase       
     end
 
     // Output assignments
     
-    assign op_ready         = (state == IDLE)? 'b1 : 'b0;                                   // The module is ready to receive new operands only in IDLE state
-    assign res_val          = (state == WAIT_RESULT_RDY)? 'b1 : 'b0;                        // Result is computed and result valid signal is asserted  
-    assign compute_enable   = (state == COMPUTE_RESULT)? 'b1 : 'b0;                         // Module is ready for final computation 
+    assign op_ready         = (state == IDLE)?                 'b1 : 'b0;                  // The module is ready to receive new operands only in IDLE state
+    assign res_val          = (state == WAIT_RESULT_RDY)?      'b1 : 'b0;                  // Result is computed and result valid signal is asserted  
+    assign compute_enable   = (state == COMPUTE_RESULT)?       'b1 : 'b0;                  // Module is ready for final computation 
     assign mult_1_op_1_sel  = (state == FIRST_STAGE_MULTIPLY)? 'b0 : 'b1;
     assign mult_1_op_2_sel  = (state == FIRST_STAGE_MULTIPLY)? 'b0 : 'b1;
     assign mult_2_op_1_sel  = (state == FIRST_STAGE_MULTIPLY)? 'b0 : 'b1;
