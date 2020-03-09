@@ -26,7 +26,7 @@ module test_environment();
     wire [DATA_WIDTH*2-1 : 0]   result_im;
     
     // Modules instantiation
-    complex_nr_mult_2 #(DATA_WIDTH) DUT(
+    complex_nr_mult_4 #(DATA_WIDTH) DUT(
         .clk        (clk      ),
         .rstn       (rstn     ),
         .sw_rst     (sw_rst   ),

@@ -24,7 +24,7 @@ V8eI@B>S_VTiCX@bG>SN442
 r1
 31
 I41SkO]_:0e=1QB9_L]PCQ1
-Z4 dD:\Master - SECI\An 1\Semestrul 2\Limbaje de descriere hardware (LDH)\Proiect\Multiplicator numere complexe\complex_nr_multiplier_2_instances\sim
+Z4 dD:\Master - SECI\An 1\Semestrul 2\Limbaje de descriere hardware (LDH)\Proiect\Multiplicator numere complexe\complex_nr_multiplier_4_instances\sim
 w1583501203
 8../src/tb/clock_rst_gen.v
 F../src/tb/clock_rst_gen.v
@@ -52,43 +52,57 @@ Vg?L>c9mDLDhLB=CD07i=R3
 r1
 31
 I?i0a:IYkTW?Kc>ADY3ngi1
-R4
+dD:\Master - SECI\An 1\Semestrul 2\Limbaje de descriere hardware (LDH)\Proiect\Multiplicator numere complexe\complex_nr_multiplier_2_instances\sim
 w1583652127
 8../src/rtl/complex_nr_mult_2.v
 F../src/rtl/complex_nr_mult_2.v
 L0 5
 R5
 R6
-!s85 0
 !s100 Kl@dB8i9z:b1;LMCK[E<42
+!s85 0
+vcomplex_nr_mult_4
+V][LZaf>Xfc14`_1J`fUfL1
+r1
+31
+I=55j`ESdJHShg<3QYlZ9b1
+R4
+w1583760671
+8../src/rtl/complex_nr_mult_4.v
+F../src/rtl/complex_nr_mult_4.v
+L0 5
+R5
+R6
+!s85 0
+!s100 NoS[fW4@AEWI;5;KR4V<l3
 vcomplex_nr_mult_tb
 VPKM;cGoGWLZ_P`Jc?GMGA3
 r1
 31
-I`oboC@7?o<g?PToWi<IE81
+IaTMhj_VV;L>ejPzDEQR[C2
 R4
-w1583758708
+w1583760801
 8../src/tb/complex_nr_mult_tb.v
 F../src/tb/complex_nr_mult_tb.v
 L0 5
 R5
 R6
 !s85 0
-!s100 UT2:RE@`86FJ27]?AF5<I3
+!s100 0^]Wj;NI`onn<gL>@>OmX0
 vcontrol_logic
-VE]d5f8J_5N=@gn8OSdFLX1
+V1RD68G7IR36NkIVXRl8^G2
 r1
 31
-Iz13fHZi5o0DNJ2b`W`e5o0
+IVKfcod0BBcH7]I[o0R;X10
 R4
-w1583759281
+w1583759978
 8../src/rtl/control_logic.v
 F../src/rtl/control_logic.v
 L0 5
 R5
 R6
 !s85 0
-!s100 QU;TfFdj@_P[D<Hm?JaFC2
+!s100 Ug_bS`M3WY5o@YS]O^?mO1
 vmonitor_complex_multiplier
 VBl80eecEOLV71=AMY^_:22
 r1
@@ -107,16 +121,16 @@ vtest_environment
 VKX?:H3Q5X05z@CiClHJ7m2
 r1
 31
-IX<nzH`E@=_MQET1eRd9A03
+Im:NH=5YkI48J<Bkn0gGX61
 R4
-w1583601552
+w1583759725
 8../src/tb/test_environment.v
 F../src/tb/test_environment.v
 L0 5
 R5
 R6
 !s85 0
-!s100 LU2VV7fYFYT__=`?PLi=61
+!s100 `aSVL:BLH<kV1MhcROYg:0
 vuint8_mult
 VJO9m9gzQ@S<>A:7TgFQi`3
 r1
