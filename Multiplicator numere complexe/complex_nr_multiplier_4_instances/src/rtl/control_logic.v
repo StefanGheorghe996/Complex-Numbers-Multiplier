@@ -40,8 +40,8 @@ module control_logic(
 
             COMPUTE_RESULT : next_state <= WAIT_RESULT_RDY; 
 
-            WAIT_RESULT_RDY :   if (~res_ready) next_state <= WAIT_RESULT_RDY;
-                                else            next_state <= IDLE;
+            WAIT_RESULT_RDY :   if (res_ready)  next_state <= IDLE;
+                                else            next_state <= WAIT_RESULT_RDY;
         
         endcase       
     end
