@@ -67,6 +67,7 @@
         task write_result_ready;
 
             begin
+                @(posedge clk);
                 res_ready <= 'b1;
                 $display("%M %t - RESULT READY SIGNAL ASSERTED", $time);
                 @(posedge clk);

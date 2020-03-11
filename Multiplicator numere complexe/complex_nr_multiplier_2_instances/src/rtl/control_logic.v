@@ -44,8 +44,8 @@ module control_logic(
     always @(posedge clk)
     begin
         case (state)
-            IDLE:   if (~op_val) next_state <= IDLE;
-                    else         next_state <= LOAD_OPERANDS;
+            IDLE:   if (~op_val)  next_state <= IDLE;
+                    else          next_state <= LOAD_OPERANDS;
                 
             LOAD_OPERANDS : next_state <= FIRST_STAGE_MULTIPLY;
 
@@ -55,8 +55,8 @@ module control_logic(
 
             COMPUTE_RESULT : next_state <= WAIT_RESULT_RDY; 
 
-            WAIT_RESULT_RDY :   if (~res_ready) next_state <= WAIT_RESULT_RDY;
-                                else            next_state <= IDLE;
+            WAIT_RESULT_RDY :   if (res_ready)  next_state <= IDLE;
+                                else            next_state <= WAIT_RESULT_RDY;
         
         endcase       
     end
