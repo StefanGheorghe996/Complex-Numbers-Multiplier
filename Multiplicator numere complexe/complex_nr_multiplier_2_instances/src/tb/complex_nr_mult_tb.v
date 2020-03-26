@@ -79,7 +79,7 @@
         task test_scenario_selected_values;
             begin
                 $display("%M %t - STARTED TEST SCENARIO WITH SELECTED VALUES", $time);
-                write_operands(2,3,4,2);
+                write_operands(2,3,4,5);
                 module_wait(2);
                 write_valid;
                 module_wait(20);

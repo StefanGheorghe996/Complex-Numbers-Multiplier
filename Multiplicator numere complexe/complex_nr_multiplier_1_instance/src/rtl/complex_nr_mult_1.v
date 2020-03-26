@@ -6,20 +6,18 @@ module complex_nr_mult_1#(
     parameter DATA_WIDTH = 8
 )(
 
-    input                       clk                 , // clock signal
-    input                       rstn                , // asynchronous reset active 0
-    input                       sw_rst              , // software reset active 1
-    input                       op_val              , // data valid signal
-    input                       res_ready           , // the consumer is ready to receive the result
-    input [DATA_WIDTH-1 : 0]    op_1_re             , // input for the real part of the first operand
-    input [DATA_WIDTH-1 : 0]    op_1_im             , // input for the imaginary part of the first operand
-    input [DATA_WIDTH-1 : 0]    op_2_re             , // input for the real part of the second operand
-    input [DATA_WIDTH-1 : 0]    op_2_im             , // input for the imaginary part of the second operand
+    input                       clk         , // clock signal
+    input                       rstn        , // asynchronous reset active 0
+    input                       sw_rst      , // software reset active 1
 
-    output wire                         op_ready    , // module is ready to receive new operands
-    output wire                         res_val     , // result valid signal
-    output reg      [DATA_WIDTH*2-1:0]  result_re   , // real part of the final result
-    output reg      [DATA_WIDTH*2-1:0]  result_im     // imaginary part of the real result
+    input                       op_val      , // data valid signal
+    output                      op_ready    , // module is ready to receive new operands
+    input [4*DATA_WIDTH-1 : 0]  op_data     , // input data
+
+
+    input                           res_ready   , // the consumer is ready to receive the result
+    output                          res_val     , // result valid signal
+    output    [8*DATA_WIDTH*-1:0]  res_data      // result data
 );
 
     // Internal signals and registers declaration
@@ -33,6 +31,8 @@ module complex_nr_mult_1#(
     reg [DATA_WIDTH*2-1 : 0]   im_x_im      ; // Register for storing the result of the imaginary parts multiplication
     reg [DATA_WIDTH*2-1 : 0]   re_x_im_1    ; // op 1 re * op 2 im
     reg [DATA_WIDTH*2-1 : 0]   re_x_im_2    ; // op 1 im * op 2 re
+    reg [DATA_WIDTH*2-1 : 0]   result_re    ; // partial real results befor concatenation
+    reg [DATA_WIDTH*2-1 : 0]   result_im    ; // partial imaginary results befor concatenation
 
     reg [DATA_WIDTH-1 : 0]  op_1_re_register ; // Register for storing real part of the first operand
     reg [DATA_WIDTH-1 : 0]  op_1_im_register ; // Register for storing imaginary part of the first operand
@@ -123,10 +123,10 @@ module complex_nr_mult_1#(
 
         else if(op_val)
         begin
-            op_1_re_register    <= op_1_re;    
-            op_1_im_register    <= op_1_im;    
-            op_2_re_register    <= op_2_re;    
-            op_2_im_register    <= op_2_im;   
+            op_1_re_register    <= op_data[4*DATA_WIDTH-1 : 3*DATA_WIDTH];    
+            op_1_im_register    <= op_data[3*DATA_WIDTH-1: 2*DATA_WIDTH];    
+            op_2_re_register    <= op_data[2*DATA_WIDTH-1 : DATA_WIDTH];    
+            op_2_im_register    <= op_data[DATA_WIDTH-1 : 0];   
         end
     end
 
@@ -148,6 +148,7 @@ module complex_nr_mult_1#(
     
     assign multiplier_op_1 = (op_1_sel == 'b0)? op_1_re : op_1_im;
     assign multiplier_op_2 = (op_2_sel == 'b0)? op_2_re : op_2_im;
+    assign res_data = (res_val == 'b1)? {result_re,result_im};
 
 
 endmodule // complex_nr_mult_1

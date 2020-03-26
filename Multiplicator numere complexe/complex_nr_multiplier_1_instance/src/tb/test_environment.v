@@ -8,7 +8,7 @@ module test_environment();
     parameter CLOCK_PERIOD = 5;
     parameter RST_DELAY = 30;
     parameter RST_DURATION = 2;
-    parameter TEST_SCENARIO = 3; // 0 = test scenario with values specified in the testbench, 1 = test scenario with random values, 2 =  test scenario with corner case values 3 = test scenario with multiple transactions
+    parameter TEST_SCENARIO = 0; // 0 = test scenario with values specified in the testbench, 1 = test scenario with random values, 2 =  test scenario with corner case values 3 = test scenario with multiple transactions
 
     //Internal signals
     wire                        clk      ;
@@ -20,7 +20,7 @@ module test_environment();
     wire [DATA_WIDTH-1 : 0]     op_1_im  ;
     wire [DATA_WIDTH-1 : 0]     op_2_re  ;
     wire [DATA_WIDTH-1 : 0]     op_2_im  ;
-    wire [DATA_WIDTH-1 : 0]     op_ready ;
+    wire                        op_ready ;
     wire                        res_val  ;
     wire [DATA_WIDTH*2-1 : 0]   result_re;
     wire [DATA_WIDTH*2-1 : 0]   result_im;

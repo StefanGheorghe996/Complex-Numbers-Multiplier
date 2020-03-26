@@ -40,12 +40,12 @@ module control_logic(
         else state <= next_state;
     end 
 
-    always @(posedge clk)
+    always @(*)
     begin
         case (state)
             IDLE:   if (~op_val) next_state <= IDLE;
-                    else if(op_val) next_state <= LOAD_OPERANDS;
-                    else next_state <= IDLE;
+                    else         next_state <= LOAD_OPERANDS;
+                    
             
             LOAD_OPERANDS : next_state <= MULT_RE_X_RE;
 
@@ -71,6 +71,8 @@ module control_logic(
     
     assign op_ready         = (state == IDLE)? 'b1 : 'b0;                                   // The module is ready to receive new operands only in IDLE state
     assign res_val          = (state == WAIT_RESULT_RDY)? 'b1 : 'b0;                        // Result is computed and result valid signal is asserted
+    assign res_val          = (state == WAIT_RESULT_RDY);                        // Result is computed and result valid signal is asserted
+    
     assign op_1_sel         = (state == MULT_RE_X_RE | state == MULT_RE_X_IM_1)? 'b0 : 'b1; // 0 = op 1 re, 1 = op 1 im 
     assign op_2_sel         = (state == MULT_RE_X_RE | state == MULT_RE_X_IM_2)? 'b0 : 'b1; // 0 = op 2 re, 1 = op 2 im
     assign compute_enable   = (state == COMPUTE_RESULT)? 'b1 : 'b0;                         // Module is ready for final computation 
