@@ -25,7 +25,7 @@ module monitor_complex_multiplier#(
     wire [DATA_WIDTH*2-1 : 0] result_im;
 
     assign result_re = res_data [4*DATA_WIDTH-1 : 2*DATA_WIDTH];
-    assign result_re = res_data [2*DATA_WIDTH-1 : 0];
+    assign result_im = res_data [2*DATA_WIDTH-1 : 0];
 
     always @(posedge clk or negedge rstn)
     begin
@@ -44,7 +44,6 @@ module monitor_complex_multiplier#(
     always @(posedge clk)
     begin
         if (res_ready && res_val) begin
-        
             if(result_re == predicted_result_re)
                 $display("%M %t - REAL PART OF THE RESULT IS COMPUTED CORRECTLY", $time);
             else
@@ -55,8 +54,6 @@ module monitor_complex_multiplier#(
     always @(posedge clk)
     begin
         if (res_ready && res_val) begin
-        
-
             if(result_im == predicted_result_im)
                 $display("%M %t - IMAGINARY PART OF THE RESULT IS COMPUTED CORRECTLY", $time);
             else

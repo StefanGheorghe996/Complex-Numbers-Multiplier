@@ -14,8 +14,8 @@ add wave -noupdate -radix decimal /test_environment/DUT/res_data
 add wave -noupdate -divider MONITOR
 add wave -noupdate -radix decimal /test_environment/MONITOR/predicted_result_re
 add wave -noupdate -radix decimal /test_environment/MONITOR/predicted_result_im
-add wave -noupdate /test_environment/MONITOR/result_re
-add wave -noupdate /test_environment/MONITOR/result_im
+add wave -noupdate -radix decimal /test_environment/MONITOR/result_re
+add wave -noupdate -radix decimal /test_environment/MONITOR/result_im
 add wave -noupdate -divider {Intermediary results}
 add wave -noupdate -radix decimal /test_environment/DUT/result_re
 add wave -noupdate -radix decimal /test_environment/DUT/result_im
@@ -23,13 +23,8 @@ add wave -noupdate -radix decimal /test_environment/DUT/re_x_re
 add wave -noupdate -radix decimal /test_environment/DUT/im_x_im
 add wave -noupdate -radix decimal /test_environment/DUT/re_x_im_1
 add wave -noupdate -radix decimal /test_environment/DUT/re_x_im_2
-add wave -noupdate -radix decimal /test_environment/DUT/op_1_re_register
-add wave -noupdate -radix decimal /test_environment/DUT/op_1_im_register
-add wave -noupdate -radix decimal /test_environment/DUT/op_2_re_register
-add wave -noupdate -radix decimal /test_environment/DUT/op_2_im_register
-add wave -noupdate /test_environment/DUT/result_reg_sel
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {365 ns} 0}
+WaveRestoreCursors {{Cursor 1} {385 ns} 0}
 configure wave -namecolwidth 309
 configure wave -valuecolwidth 100
 configure wave -justifyvalue left
