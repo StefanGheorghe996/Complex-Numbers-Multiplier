@@ -13,9 +13,6 @@ entity complex_nr_mult_tb is
         sw_rst          : out    vl_logic;
         op_val          : out    vl_logic;
         res_ready       : out    vl_logic;
-        op_1_re         : out    vl_logic_vector;
-        op_1_im         : out    vl_logic_vector;
-        op_2_re         : out    vl_logic_vector;
-        op_2_im         : out    vl_logic_vector
+        op_data         : out    vl_logic_vector
     );
 end complex_nr_mult_tb;

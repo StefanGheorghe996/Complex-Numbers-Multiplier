@@ -5,32 +5,27 @@
 module complex_nr_mult_2#(
     parameter DATA_WIDTH = 8
 )(
+    input                       clk         , // clock signal
+    input                       rstn        , // asynchronous reset active 0
+    input                       sw_rst      , // software reset active 1
 
-    input                       clk                 , // clock signal
-    input                       rstn                , // asynchronous reset active 0
-    input                       sw_rst              , // software reset active 1
-    input                       op_val              , // data valid signal
-    input                       res_ready           , // the consumer is ready to receive the result
-    input [DATA_WIDTH-1 : 0]    op_1_re             , // input for the real part of the first operand
-    input [DATA_WIDTH-1 : 0]    op_1_im             , // input for the imaginary part of the first operand
-    input [DATA_WIDTH-1 : 0]    op_2_re             , // input for the real part of the second operand
-    input [DATA_WIDTH-1 : 0]    op_2_im             , // input for the imaginary part of the second operand
+    input                       op_val      , // data valid signal
+    output                      op_ready    , // module is ready to receive new operands
+    input [4*DATA_WIDTH-1 : 0]  op_data     , // input data
 
-    output wire                         op_ready    , // module is ready to receive new operands
-    output wire                         res_val     , // result valid signal
-    output reg      [DATA_WIDTH*2-1:0]  result_re   , // real part of the final result
-    output reg      [DATA_WIDTH*2-1:0]  result_im     // imaginary part of the real result
+
+    input                           res_ready   , // the consumer is ready to receive the result
+    output                          res_val     , // result valid signal
+    output    [4*DATA_WIDTH-1:0]    res_data      // result data
 );
 
     // Internal signals and registers declaration
 
-    
+    reg [DATA_WIDTH*2-1:0]    result_re;    // real part of the final result
+    reg [DATA_WIDTH*2-1:0]    result_im;    // imaginary part of the real result
+
     wire compute_enable     ;
-    wire mult_1_op_1_sel    ;
-    wire mult_1_op_2_sel    ;
-    wire mult_2_op_1_sel    ;
-    wire mult_2_op_2_sel    ;
-    wire mult_1_res_sel     ;
+    wire mux_selection      ;
     wire mult_2_res_sel     ;
     
 
@@ -62,23 +57,18 @@ module complex_nr_mult_2#(
         .res_ready         (res_ready      ),  
         .op_ready          (op_ready       ),  
         .res_val           (res_val        ),  
-        .mult_1_op_1_sel   (mult_1_op_1_sel),  
-        .mult_1_op_2_sel   (mult_1_op_2_sel),  
-        .mult_2_op_1_sel   (mult_2_op_1_sel),  
-        .mult_2_op_2_sel   (mult_2_op_2_sel),  
-        .mult_1_res_sel    (mult_1_res_sel ),  
-        .mult_2_res_sel    (mult_2_res_sel ),  
+        .mux_selection     (mux_selection  ),    
         .compute_enable    (compute_enable )  
     );
 
     uint8_mult  #(DATA_WIDTH) MULTIPLIER_1(
-        .op1    (multiplier_1_op_1  ),
+        .op1    (op_1_re_register   ),
         .op2    (multiplier_1_op_2  ),
         .result (multiplier_1_result)
     );
 
     uint8_mult  #(DATA_WIDTH) MULTIPLIER_2(
-        .op1    (multiplier_2_op_1  ),
+        .op1    (op_1_im_register   ),
         .op2    (multiplier_2_op_2  ),
         .result (multiplier_2_result)
     );
@@ -89,7 +79,7 @@ module complex_nr_mult_2#(
     begin
          if(~rstn)                          re_x_re <= 'b0;
          else if (sw_rst)                   re_x_re <= 'b0;
-         else if (mult_1_res_sel == 'b0)    re_x_re <= multiplier_1_result;
+         else if (mux_selection == 'b1)     re_x_re <= multiplier_1_result;
          else if (op_ready == 'b1)          re_x_re <= 'b0;
          else                               re_x_re <= re_x_re;
     end
@@ -98,7 +88,7 @@ module complex_nr_mult_2#(
     begin
          if(~rstn)                          im_x_im <= 'b0;
          else if (sw_rst)                   im_x_im <= 'b0;
-         else if (mult_1_res_sel == 'b1)    im_x_im <= multiplier_1_result;
+         else if (mux_selection == 'b0)     im_x_im <= multiplier_2_result;
          else if (op_ready == 'b1)          im_x_im <= 'b0;
          else                               im_x_im <= im_x_im;
     end
@@ -107,7 +97,7 @@ module complex_nr_mult_2#(
     begin
          if(~rstn)                          re_x_im_1 <= 'b0;
          else if (sw_rst)                   re_x_im_1 <= 'b0;
-         else if (mult_2_res_sel == 'b0)    re_x_im_1 <= multiplier_2_result;
+         else if (mux_selection == 'b1)     re_x_im_1 <= multiplier_2_result;
          else if (op_ready == 'b1)          re_x_im_1 <= 'b0;
          else                               re_x_im_1 <= re_x_im_1;
     end
@@ -116,7 +106,7 @@ module complex_nr_mult_2#(
     begin
          if(~rstn)                          re_x_im_2 <= 'b0;
          else if (sw_rst)                   re_x_im_2 <= 'b0;
-         else if (mult_2_res_sel == 'b1)    re_x_im_2 <= multiplier_2_result;
+         else if (mux_selection == 'b0)     re_x_im_2 <= multiplier_1_result;
          else if (op_ready == 'b1)          re_x_im_2 <= 'b0;
          else                               re_x_im_2 <= re_x_im_2;
     end
@@ -141,10 +131,10 @@ module complex_nr_mult_2#(
 
         else if(op_val)
         begin
-            op_1_re_register    <= op_1_re;    
-            op_1_im_register    <= op_1_im;    
-            op_2_re_register    <= op_2_re;    
-            op_2_im_register    <= op_2_im;   
+            op_1_re_register    <= op_data[4*DATA_WIDTH-1 : 3*DATA_WIDTH];
+            op_1_im_register    <= op_data[3*DATA_WIDTH-1: 2*DATA_WIDTH]; 
+            op_2_re_register    <= op_data[2*DATA_WIDTH-1 : DATA_WIDTH];  
+            op_2_im_register    <= op_data[DATA_WIDTH-1 : 0];      
         end
     end
 
@@ -164,10 +154,10 @@ module complex_nr_mult_2#(
 
     // Assigning the inputs for the multiplier module
     
-    assign multiplier_1_op_1 = (mult_1_op_1_sel == 'b0)? op_1_re_register : op_1_im_register;
-    assign multiplier_1_op_2 = (mult_1_op_2_sel == 'b0)? op_2_re_register : op_2_im_register;
-    assign multiplier_2_op_1 = (mult_2_op_1_sel == 'b0)? op_1_re_register : op_1_im_register;
-    assign multiplier_2_op_2 = (mult_2_op_2_sel == 'b0)? op_2_re_register : op_2_im_register;
+    assign multiplier_1_op_2 = (mux_selection == 'b1)? op_2_re_register : op_2_im_register;
+    assign multiplier_2_op_2 = (mux_selection == 'b1)? op_2_re_register : op_2_im_register;
+
+    assign res_data = {result_re,result_im};
 
 
 endmodule // complex_nr_mult_1

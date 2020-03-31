@@ -17,12 +17,7 @@ entity control_logic is
         res_ready       : in     vl_logic;
         op_ready        : out    vl_logic;
         res_val         : out    vl_logic;
-        mult_1_op_1_sel : out    vl_logic;
-        mult_1_op_2_sel : out    vl_logic;
-        mult_2_op_1_sel : out    vl_logic;
-        mult_2_op_2_sel : out    vl_logic;
-        mult_1_res_sel  : out    vl_logic;
-        mult_2_res_sel  : out    vl_logic;
+        mux_selection   : out    vl_logic;
         compute_enable  : out    vl_logic
     );
 end control_logic;

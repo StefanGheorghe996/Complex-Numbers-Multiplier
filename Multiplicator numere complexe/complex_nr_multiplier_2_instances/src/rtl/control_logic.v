@@ -11,12 +11,7 @@ module control_logic(
 
     output wire             op_ready            , // module is ready to receive new operands
     output wire             res_val             , // result valid signal
-    output wire             mult_1_op_1_sel     , // selection signal for operand 1 of the first multiply module
-    output wire             mult_1_op_2_sel     , // selection signal for operand 2 of the first multiply module
-    output wire             mult_2_op_1_sel     , // selection signal for operand 1 of the second multiply module
-    output wire             mult_2_op_2_sel     , // selection signal for operand 2 of the second multiply module
-    output wire             mult_1_res_sel      , // selection signal for result register for the first multiply module
-    output wire             mult_2_res_sel      , // selection signal for result register for the second multiply module
+    output wire             mux_selection       , // selection signal for result registers and operands
     output wire             compute_enable        // enable for final result computation
 );
 
@@ -63,15 +58,9 @@ module control_logic(
 
     // Output assignments
     
-    assign op_ready         = (state == IDLE)?                 'b1 : 'b0;                  // The module is ready to receive new operands only in IDLE state
-    assign res_val          = (state == WAIT_RESULT_RDY)?      'b1 : 'b0;                  // Result is computed and result valid signal is asserted  
-    assign compute_enable   = (state == COMPUTE_RESULT)?       'b1 : 'b0;                  // Module is ready for final computation 
-    assign mult_1_op_1_sel  = (state == FIRST_STAGE_MULTIPLY)? 'b0 : 'b1;
-    assign mult_1_op_2_sel  = (state == FIRST_STAGE_MULTIPLY)? 'b0 : 'b1;
-    assign mult_2_op_1_sel  = (state == FIRST_STAGE_MULTIPLY)? 'b0 : 'b1;
-    assign mult_2_op_2_sel  = (state == FIRST_STAGE_MULTIPLY)? 'b1 : 'b0;
-    assign mult_1_res_sel   = (state == FIRST_STAGE_MULTIPLY)? 'b0 : 'b1;
-    assign mult_2_res_sel   = (state == FIRST_STAGE_MULTIPLY)? 'b0 : 'b1;
-
+    assign op_ready         = state == IDLE                 ;                  // The module is ready to receive new operands only in IDLE state
+    assign res_val          = state == WAIT_RESULT_RDY      ;                  // Result is computed and result valid signal is asserted  
+    assign compute_enable   = state == COMPUTE_RESULT       ;                  // Module is ready for final computation 
+    assign mux_selection    = state == FIRST_STAGE_MULTIPLY ;
 
 endmodule // control_logic

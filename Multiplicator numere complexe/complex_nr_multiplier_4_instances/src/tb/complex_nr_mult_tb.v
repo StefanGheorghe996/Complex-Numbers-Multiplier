@@ -14,10 +14,7 @@
         output reg                       sw_rst              , // software reset active 1
         output reg                       op_val              , // data valid signal
         output reg                       res_ready           , // the consumer is ready to receive the result
-        output reg [DATA_WIDTH-1 : 0]    op_1_re             , // input for the real part of the first operand
-        output reg [DATA_WIDTH-1 : 0]    op_1_im             , // input for the imaginary part of the first operand
-        output reg [DATA_WIDTH-1 : 0]    op_2_re             , // input for the real part of the second operand
-        output reg [DATA_WIDTH-1 : 0]    op_2_im               // input for the imaginary part of the second operand
+        output reg [4*DATA_WIDTH-1 : 0]  op_data               // input for the DUT
 
     );
         // Internal signals and registers
@@ -34,10 +31,7 @@
             input [DATA_WIDTH-1 : 0] op_2_im_value;
 
             begin
-                op_1_re <= op_1_re_value;
-                op_1_im <= op_1_im_value;
-                op_2_re <= op_2_re_value;
-                op_2_im <= op_2_im_value;
+                op_data <= {op_1_re_value,op_1_im_value,op_2_re_value,op_2_im_value};
                 $display("%M %t - OPERANDS VALUES ON THE BUS", $time);
             end
         endtask
@@ -57,7 +51,8 @@
             begin
                 op_val <= 'b1;
                 $display("%M %t - OPERAND VALID SIGNAL ASSERTED", $time);
-                @(posedge res_val);
+                @(posedge clk);
+                @(posedge clk);
                 op_val <= 'b0;
                 $display("%M %t - OPERAND VALID SIGNAL DEASSERTED", $time);
             end    
@@ -146,6 +141,10 @@
         initial 
         begin
             wait(~rstn);
+            sw_rst    = 'b0;
+            op_val    = 'b0;
+            res_ready = 'b0;
+            op_data   = 'b0;
             case (TEST_SCENARIO)
                 0:  test_scenario_selected_values;
                 1:  test_scenario_random_values;

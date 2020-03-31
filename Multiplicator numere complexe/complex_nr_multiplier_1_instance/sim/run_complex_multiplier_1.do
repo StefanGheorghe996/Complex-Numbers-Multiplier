@@ -8,11 +8,6 @@ vlog -work work -L mtiAvm -L mtiOvm -L mtiUPF {../src/tb/test_environment.v}
 
 vsim -novopt work.test_environment
 
-#add wave test_environment/DUT/*
-#add wave test_environment/DUT/CONTROL_LOGIC/*
-#add wave test_environment/TESTBENCH/*
-#add wave test_environment/MONITOR/*
-
 do wave.do
 
 run -all
