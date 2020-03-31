@@ -17,7 +17,7 @@ module complex_nr_mult_1#(
 
     input                           res_ready   , // the consumer is ready to receive the result
     output                          res_val     , // result valid signal
-    output    [8*DATA_WIDTH*-1:0]  res_data      // result data
+    output    [4*DATA_WIDTH-1:0]    res_data      // result data
 );
 
     // Internal signals and registers declaration
@@ -146,9 +146,11 @@ module complex_nr_mult_1#(
 
     // Assigning the inputs for the multiplier module
     
-    assign multiplier_op_1 = (op_1_sel == 'b0)? op_1_re : op_1_im;
-    assign multiplier_op_2 = (op_2_sel == 'b0)? op_2_re : op_2_im;
-    assign res_data = (res_val == 'b1)? {result_re,result_im};
+    assign multiplier_op_1 = (op_1_sel == 'b0)? op_1_re_register : op_1_im_register;
+    assign multiplier_op_2 = (op_2_sel == 'b0)? op_2_re_register : op_2_im_register;
+
+
+    assign res_data = {result_re,result_im};
 
 
 endmodule // complex_nr_mult_1

@@ -141,6 +141,10 @@
         initial 
         begin
             wait(~rstn);
+            sw_rst    = 'b0;
+            op_val    = 'b0;
+            res_ready = 'b0;
+            op_data   = 'b0;
             case (TEST_SCENARIO)
                 0:  test_scenario_selected_values;
                 1:  test_scenario_random_values;

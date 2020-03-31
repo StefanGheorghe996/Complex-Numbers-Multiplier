@@ -19,13 +19,13 @@ module control_logic(
 
     //State parameters
     parameter IDLE              = 3'b000; // Idle state
-    parameter LOAD_OPERANDS     = 3'b001; // Wait 1 clock cycle to load the operands in the registers when data valid is asserted
-    parameter MULT_RE_X_RE      = 3'b010; // Multiply the real part of the operands
-    parameter MULT_IM_X_IM      = 3'b011; // Multiply the imaginary part of the operands
-    parameter MULT_RE_X_IM_1    = 3'b100; // Multiply the real part of the first operand with the imaginary part of the second operand
-    parameter MULT_RE_X_IM_2    = 3'b101; // Multiply the real part of the second operand with the imaginary part of the firs operand
-    parameter COMPUTE_RESULT    = 3'b110; // Compute final result
-    parameter WAIT_RESULT_RDY   = 3'b111; // Wait for result ready signal to be asserted
+    parameter LOAD_OPERANDS     = 3'b010; // Wait 1 clock cycle to load the operands in the registers when data valid is asserted
+    parameter MULT_RE_X_RE      = 3'b001; // Multiply the real part of the operands
+    parameter MULT_IM_X_IM      = 3'b111; // Multiply the imaginary part of the operands
+    parameter MULT_RE_X_IM_1    = 3'b101; // Multiply the real part of the first operand with the imaginary part of the second operand
+    parameter MULT_RE_X_IM_2    = 3'b011; // Multiply the real part of the second operand with the imaginary part of the firs operand
+    parameter COMPUTE_RESULT    = 3'b100; // Compute final result
+    parameter WAIT_RESULT_RDY   = 3'b110; // Wait for result ready signal to be asserted
 
     // Internal signals and registers
     reg [2:0] state;
@@ -69,18 +69,13 @@ module control_logic(
 
     // Output assignments
     
-    assign op_ready         = (state == IDLE)? 'b1 : 'b0;                                   // The module is ready to receive new operands only in IDLE state
-    assign res_val          = (state == WAIT_RESULT_RDY)? 'b1 : 'b0;                        // Result is computed and result valid signal is asserted
-    assign res_val          = (state == WAIT_RESULT_RDY);                        // Result is computed and result valid signal is asserted
-    
-    assign op_1_sel         = (state == MULT_RE_X_RE | state == MULT_RE_X_IM_1)? 'b0 : 'b1; // 0 = op 1 re, 1 = op 1 im 
-    assign op_2_sel         = (state == MULT_RE_X_RE | state == MULT_RE_X_IM_2)? 'b0 : 'b1; // 0 = op 2 re, 1 = op 2 im
-    assign compute_enable   = (state == COMPUTE_RESULT)? 'b1 : 'b0;                         // Module is ready for final computation 
+    assign op_ready         = state == IDLE;                                                // The module is ready to receive new operands only in IDLE state
+    assign res_val          = state == WAIT_RESULT_RDY;                                     // Result is computed and result valid signal is asserted  
+    assign op_1_sel         = (state[0] == 'b1)? state[2] : 'bx;                            // 0 = op 1 re, 1 = op 1 im 
+    assign op_2_sel         = (state[0] == 'b1)? state[1] : 'bx;                            // 0 = op 2 re, 1 = op 2 im
+    assign compute_enable   = state == COMPUTE_RESULT;                                      // Module is ready for final computation 
 
-    assign result_reg_sel   = (state == MULT_RE_X_RE)?      'b00 :
-                              (state == MULT_IM_X_IM)?      'b01 :
-                              (state == MULT_RE_X_IM_1)?    'b10 :
-                              (state == MULT_RE_X_IM_2)?    'b11 : 'bz;                     // Select where the multiply partial result is stored            
+    assign result_reg_sel   = (state[0] == 'b1)? {(state[2]^state[1]),state[1]} : 'bx;      // Select where the multiply partial result is stored            
 
 
 endmodule // control_logic
