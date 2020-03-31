@@ -36,7 +36,7 @@ module control_logic(
         else state <= next_state;
     end 
 
-    always @(posedge clk)
+    always @(*)
     begin
         case (state)
             IDLE:   if (~op_val)  next_state <= IDLE;
