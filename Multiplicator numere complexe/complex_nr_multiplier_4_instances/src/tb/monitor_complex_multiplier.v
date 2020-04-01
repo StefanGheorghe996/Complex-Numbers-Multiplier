@@ -47,7 +47,10 @@ module monitor_complex_multiplier#(
             if(result_re == predicted_result_re)
                 $display(" %t - REAL PART OF THE RESULT IS COMPUTED CORRECTLY - EXPECTED VALUE = %d, DUT GENERATED VALUE = %d", $time,predicted_result_re,result_re);
             else
+            begin
                 $display(" %t - REAL PART OF THE RESULT WAS NOT COMPUTED CORRECTLY- EXPECTED VALUE = %d, DUT GENERATED VALUE = %d", $time,predicted_result_re,result_re);
+                $stop;
+            end
         end
     end
     
@@ -57,7 +60,10 @@ module monitor_complex_multiplier#(
             if(result_im == predicted_result_im)
                 $display(" %t - IMAGINARY PART OF THE RESULT IS COMPUTED CORRECTLY - EXPECTED VALUE = %d, DUT GENERATED VALUE = %d", $time,predicted_result_im,result_im);
             else
+            begin
                 $display(" %t - IMAGINARY PART OF THE RESULT WAS NOT COMPUTED CORRECTLY - EXPECTED VALUE = %d, DUT GENERATED VALUE = %d", $time,predicted_result_im,result_im);
+                $stop;
+            end
         end
     end
 

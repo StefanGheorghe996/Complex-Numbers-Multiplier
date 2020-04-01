@@ -10,11 +10,9 @@
         input   clk         , // clock signal
         input   rstn        , // asynchronous reset active 0
         input   op_ready    , // module is ready to receive new operands
-        input   res_val     , // result valid signal
 
         output reg                       sw_rst              , // software reset active 1
         output reg                       op_val              , // data valid signal
-        output reg                       res_ready           , // the consumer is ready to receive the result
         output reg [4*DATA_WIDTH-1 : 0]  op_data               // input for the DUT
 
     );
@@ -58,17 +56,6 @@
             end    
         endtask
 
-        task write_result_ready;
-
-            begin
-                res_ready <= 'b1;
-                $display(" %t - RESULT READY SIGNAL ASSERTED", $time);
-                @(negedge res_val);
-                res_ready <= 'b0;
-                $display(" %t - RESULT READY SIGNAL DEASSERTED", $time);
-            end    
-        endtask
-
         task test_scenario_selected_values;
             begin
                 $display(" %t - STARTED TEST SCENARIO WITH SELECTED VALUES", $time);
@@ -76,12 +63,12 @@
                 module_wait(2);
                 write_valid;
                 module_wait(20);
-                write_result_ready;
                 $stop;
             end
         endtask
 
         task test_scenario_random_values;
+            input multiple_transactions;
             begin
                 op_1_re_reg = $random;
                 op_1_im_reg = $random;
@@ -93,8 +80,8 @@
                 module_wait(2);
                 write_valid;
                 module_wait(20);
-                write_result_ready;
-                $stop;
+                if (multiple_transactions != 1) $stop;
+                    
             end
         endtask
 
@@ -110,7 +97,6 @@
                 module_wait(2);
                 write_valid;
                 module_wait(20);
-                write_result_ready;
                 $stop;
             end
         endtask
@@ -122,17 +108,8 @@
                 $display(" %t - STARTED FIRST TEST SCENARIO WITH MULTIPLE TRANSACTIONS VALUES", $time);
                 for (i=0; i<transaction_number; i=i+1) 
                 begin
-                    op_1_re_reg = $random;
-                    op_1_im_reg = $random;
-                    op_2_re_reg = $random;
-                    op_2_im_reg = $random;
 
-                    $display(" %t - MULTIPLYING (%0d+i%0d) AND (%0d+i%0d)", $time,op_1_re_reg,op_1_im_reg,op_2_re_reg,op_2_im_reg);
-                    write_operands(op_1_re_reg,op_1_im_reg,op_2_re_reg,op_2_im_reg);
-                    module_wait(0);
-                    write_valid;
-                    module_wait(20);
-                    write_result_ready;
+                    test_scenario_random_values(1);
 
                     $display(" %t - FINISHED TRANSACTION NO %0d", $time,i+1);
                 end
@@ -145,11 +122,10 @@
             wait(~rstn);
             sw_rst    = 'b0;
             op_val    = 'b0;
-            res_ready = 'b0;
             op_data   = 'b0;
             case (TEST_SCENARIO)
                 0:  test_scenario_selected_values;
-                1:  test_scenario_random_values;
+                1:  test_scenario_random_values(0);
                 2:  test_scenario_corner_case; 
                 3:  test_scenario_multiple_transactions(TRANSACTION_NR);
                 default:    test_scenario_selected_values;      

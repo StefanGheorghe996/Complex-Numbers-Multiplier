@@ -7,6 +7,7 @@ entity test_environment is
         TRANSACTION_NR  : integer := 30;
         RST_DELAY       : integer := 30;
         RST_DURATION    : integer := 2;
-        TEST_SCENARIO   : integer := 3
+        TEST_SCENARIO   : integer := 3;
+        WAIT_BEFORE_READY: integer := 20
     );
 end test_environment;

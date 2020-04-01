@@ -10,10 +10,8 @@ entity complex_nr_mult_tb is
         clk             : in     vl_logic;
         rstn            : in     vl_logic;
         op_ready        : in     vl_logic;
-        res_val         : in     vl_logic;
         sw_rst          : out    vl_logic;
         op_val          : out    vl_logic;
-        res_ready       : out    vl_logic;
         op_data         : out    vl_logic_vector
     );
 end complex_nr_mult_tb;
