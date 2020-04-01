@@ -6,7 +6,7 @@ module test_environment();
     
     parameter DATA_WIDTH = 8;
     parameter CLOCK_PERIOD = 5;  
-    parameter TRANSACTION_NR = 30;      // Number of transactions for forth test scenario
+    parameter TRANSACTION_NR = 30;      // Number of transactions for the forth test scenario
     parameter RST_DELAY = 30;           // Initial waiting period before reset
     parameter RST_DURATION = 2;         // Duration of the reset pulse
     parameter TEST_SCENARIO = 3;        // 0 = test scenario with values specified in the testbench, 1 = test scenario with random values, 2 =  test scenario with corner case values 3 = test scenario with multiple transactions
