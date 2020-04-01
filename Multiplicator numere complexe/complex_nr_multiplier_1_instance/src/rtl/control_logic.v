@@ -81,7 +81,7 @@ module control_logic(
         MULT_IM_X_IM  :     result_reg_sel <= 2'b01; 
         MULT_RE_X_IM_1:     result_reg_sel <= 2'b10; 
         MULT_RE_X_IM_2:     result_reg_sel <= 2'b11;  
-        default: result_reg_sel <= 2'b00;  
+        default:            result_reg_sel <= 2'b00;  
     endcase
 
 endmodule // control_logic
