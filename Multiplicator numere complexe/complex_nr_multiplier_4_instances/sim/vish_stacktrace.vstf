@@ -1,0 +1,39 @@
+# Current time Wed Apr 01 19:53:23 2020
+# ModelSim Stack Trace
+# Program = vish
+# Id = "6.6d"
+# Version = "2010.11"
+# Date = "Nov  1 2010"
+# Platform = win32
+
+Exception c0000005 has occurred at address 005583fc. Traceback:
+# 0    0x005583fc: 'Mtirpc_Init + 0xcda0c'
+# 1    0x0047e4f6: '<unknown (@0x47e4f6)>'
+# 2    0x004b0517: 'Mtirpc_Init + 0x25b27'
+# 3    0x004678df: '<unknown (@0x4678df)>'
+# 4    0x00468c08: '<unknown (@0x468c08)>'
+# 5    0x00469061: '<unknown (@0x469061)>'
+# 6    0x1005848e: 'TclServiceIdle + 0x7e'
+# 7    0x1004b131: 'Tcl_DoOneEvent + 0x121'
+# 8    0x1025980f: 'Tk_UpdateObjCmd + 0x6f'
+# 9    0x1000c770: 'TclEvalObjvInternal + 0x230'
+# 10   0x1000dd77: 'Tcl_EvalEx + 0x167'
+# 11   0x1000f1a5: 'Tcl_EvalObjEx + 0x235'
+# 12   0x10011bf5: 'Tcl_EvalObjCmd + 0x75'
+# 13   0x1000c770: 'TclEvalObjvInternal + 0x230'
+# 14   0x1002d7bb: 'TclExprFloatError + 0x10eb'
+# 15   0x1002bc79: 'TclCompEvalObj + 0xd9'
+# 16   0x1005391f: 'TclObjInterpProc + 0x23f'
+# 17   0x1000c770: 'TclEvalObjvInternal + 0x230'
+# 18   0x1002d7bb: 'TclExprFloatError + 0x10eb'
+# 19   0x1002bc79: 'TclCompEvalObj + 0xd9'
+# 20   0x1005391f: 'TclObjInterpProc + 0x23f'
+# 21   0x1000c770: 'TclEvalObjvInternal + 0x230'
+# 22   0x1002d7bb: 'TclExprFloatError + 0x10eb'
+# 23   0x1002bc79: 'TclCompEvalObj + 0xd9'
+# 24   0x1000efc6: 'Tcl_EvalObjEx + 0x56'
+# 25   0x049eaa8d: 'Itcl_EvalMemberCode + 0x22d'
+# 26   0x08515168: '<unknown (@0x8515168)>'
+StackWalk failed 126
+# End of Stack Trace
+
