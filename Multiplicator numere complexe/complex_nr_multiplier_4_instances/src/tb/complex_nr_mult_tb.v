@@ -51,7 +51,7 @@
             begin
                 op_val <= 'b1;
                 $display("%M %t - OPERAND VALID SIGNAL ASSERTED", $time);
-                @(posedge clk);
+                @(negedge res_ready);
                 op_val <= 'b0;
                 $display("%M %t - OPERAND VALID SIGNAL DEASSERTED", $time);
             end    
@@ -62,7 +62,7 @@
             begin
                 res_ready <= 'b1;
                 $display("%M %t - RESULT READY SIGNAL ASSERTED", $time);
-                @(posedge clk);
+                @(negedge res_val);
                 res_ready <= 'b0;
                 $display("%M %t - RESULT READY SIGNAL DEASSERTED", $time);
             end    
