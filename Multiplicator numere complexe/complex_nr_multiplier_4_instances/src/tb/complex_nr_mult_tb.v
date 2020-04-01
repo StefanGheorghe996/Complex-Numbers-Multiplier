@@ -3,8 +3,9 @@
     // Date:    06.03.2020
 
     module complex_nr_mult_tb#(
-        parameter DATA_WIDTH    = 8,
-        parameter TEST_SCENARIO = 0
+        parameter DATA_WIDTH     = 8    ,
+        parameter TEST_SCENARIO  = 0    ,
+        parameter TRANSACTION_NR = 20
     )(
         input   clk         , // clock signal
         input   rstn        , // asynchronous reset active 0
@@ -87,7 +88,7 @@
                 op_2_re_reg = $random;
                 op_2_im_reg = $random;
             
-                $display("%M %t - STARTED TEST SCENARIO WITH RANDOM VALUES", $time);
+                $display("%M %t - STARTED TEST SCENARIO WITH RANDOM VALUES: (%0d+i%0d) AND (%0d+i%0d)", $time,op_1_re_reg,op_1_im_reg,op_2_re_reg,op_2_im_reg);
                 write_operands(op_1_re_reg,op_1_im_reg,op_2_re_reg,op_2_im_reg);
                 module_wait(2);
                 write_valid;
@@ -104,7 +105,7 @@
                 op_2_re_reg = {DATA_WIDTH{1'b1}};
                 op_2_im_reg = {DATA_WIDTH{1'b1}};
 
-                $display("%M %t - STARTED TEST SCENARIO WITH CORNER CASE VALUES", $time);
+                $display("%M %t - STARTED TEST SCENARIO WITH CORNER CASE VALUES(%0d+i%0d) AND (%0d+i%0d)", $time,op_1_re_reg,op_1_im_reg,op_2_re_reg,op_2_im_reg);
                 write_operands(op_1_re_reg,op_1_im_reg,op_2_re_reg,op_2_im_reg);
                 module_wait(2);
                 write_valid;
@@ -126,7 +127,7 @@
                     op_2_re_reg = $random;
                     op_2_im_reg = $random;
 
-
+                    $display("%M %t - MULTIPLYING (%0d+i%0d) AND (%0d+i%0d)", $time,op_1_re_reg,op_1_im_reg,op_2_re_reg,op_2_im_reg);
                     write_operands(op_1_re_reg,op_1_im_reg,op_2_re_reg,op_2_im_reg);
                     module_wait(2);
                     write_valid;
@@ -148,7 +149,7 @@
                 0:  test_scenario_selected_values;
                 1:  test_scenario_random_values;
                 2:  test_scenario_corner_case; 
-                3:  test_scenario_multiple_transactions(3);
+                3:  test_scenario_multiple_transactions(TRANSACTION_NR);
                 default:    test_scenario_selected_values;      
             endcase      
         end
