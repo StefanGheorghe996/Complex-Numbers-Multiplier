@@ -21,7 +21,7 @@ module test_environment();
     wire [4*DATA_WIDTH-1 : 0]   op_data  ;
     wire                        op_ready ;
     wire                        res_val  ;
-    wire [4*DATA_WIDTH+3 : 0]   res_data ;
+    wire [4*DATA_WIDTH+2 : 0]   res_data ;
     
     // Modules instantiation
 

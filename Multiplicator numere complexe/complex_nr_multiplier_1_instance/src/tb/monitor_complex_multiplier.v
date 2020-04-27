@@ -15,7 +15,7 @@ module monitor_complex_multiplier#(
 
     input                       res_val         ,
     input                       res_ready       ,
-    input [4*DATA_WIDTH-1 : 0]  res_data
+    input [4*DATA_WIDTH+2 : 0]  res_data
 );
 
     //Internal registers for checking the functionality
@@ -45,9 +45,12 @@ module monitor_complex_multiplier#(
     begin
         if (res_ready && res_val) begin
             if(result_re == predicted_result_re)
-                $display("%M %t - REAL PART OF THE RESULT IS COMPUTED CORRECTLY", $time);
+                $display(" %t - REAL PART OF THE RESULT IS COMPUTED CORRECTLY - EXPECTED VALUE = %d, DUT GENERATED VALUE = %d", $time,predicted_result_re,result_re);
             else
-                $display("%M %t - REAL PART OF THE RESULT WAS NOT COMPUTED CORRECTLY", $time);
+            begin
+                $display(" %t - REAL PART OF THE RESULT WAS NOT COMPUTED CORRECTLY- EXPECTED VALUE = %d, DUT GENERATED VALUE = %d", $time,predicted_result_re,result_re);
+                $stop;
+            end
         end
     end
     
@@ -55,9 +58,12 @@ module monitor_complex_multiplier#(
     begin
         if (res_ready && res_val) begin
             if(result_im == predicted_result_im)
-                $display("%M %t - IMAGINARY PART OF THE RESULT IS COMPUTED CORRECTLY", $time);
+                $display(" %t - IMAGINARY PART OF THE RESULT IS COMPUTED CORRECTLY - EXPECTED VALUE = %d, DUT GENERATED VALUE = %d", $time,predicted_result_im,result_im);
             else
-                $display("%M %t - IMAGINARY PART OF THE RESULT WAS NOT COMPUTED CORRECTLY", $time);
+            begin
+                $display(" %t - IMAGINARY PART OF THE RESULT WAS NOT COMPUTED CORRECTLY - EXPECTED VALUE = %d, DUT GENERATED VALUE = %d", $time,predicted_result_im,result_im);
+                $stop;
+            end
         end
     end
 

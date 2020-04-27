@@ -15,7 +15,7 @@ module monitor_complex_multiplier#(
 
     input                       res_val         ,
     input                       res_ready       ,
-    input [4*DATA_WIDTH+3 : 0]  res_data
+    input [4*DATA_WIDTH+2 : 0]  res_data
 );
 
     //Internal registers for checking the functionality

@@ -17,7 +17,7 @@ module complex_nr_mult_4#(
 
     input                           res_ready   , // the consumer is ready to receive the result
     output                          res_val     , // result valid signal
-    output    [4*DATA_WIDTH+3:0]    res_data      // result data
+    output    [4*DATA_WIDTH+2:0]    res_data      // result data
 );
 
     // Internal signals and registers declaration
