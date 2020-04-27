@@ -25,7 +25,7 @@ module test_environment();
     
     // Modules instantiation
 
-    complex_nr_mult_4 #(DATA_WIDTH) DUT(
+    complex_nr_mult_2 #(DATA_WIDTH) DUT(
         .clk        (clk      ),
         .rstn       (rstn     ),
         .sw_rst     (sw_rst   ),
